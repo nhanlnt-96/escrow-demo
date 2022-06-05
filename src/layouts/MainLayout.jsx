@@ -1,15 +1,15 @@
-import React from 'react'
-import Footer from './../components/Footer';
+import React from "react";
 import Header from "../components/header/Header";
+import Footer from "../components/footer/Footer";
 
 export default function MainLayout({children}) {
   return (
     <div>
-      <Header />
+      <Header/>
       <main>
         {children}
       </main>
-      <Footer />
+      {/*<Footer/>*/}
     </div>
-  )
+  );
 }
