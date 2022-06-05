@@ -1,0 +1,19 @@
+.use-escrow-table {
+  &__body {
+    &__row {
+      &:hover {
+        background-color: rgba(225, 225, 225, .55);
+        transition: all .5s linear;
+        cursor: pointer;
+      }
+    }
+
+    &__item {
+      vertical-align: middle;
+
+      &.item-hover:hover {
+        color: #007bff;
+      }
+    }
+  }
+}
