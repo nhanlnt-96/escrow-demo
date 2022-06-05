@@ -8,7 +8,7 @@ import {
   getTotalConfirmed,
   getTotalDisputed,
   getTotalItems
-} from '../utils/escrow'
+} from '../../utils/escrow'
 
 export default function EscrowInfo() {
   const [escAcc, setEscAcc] = useState('')
