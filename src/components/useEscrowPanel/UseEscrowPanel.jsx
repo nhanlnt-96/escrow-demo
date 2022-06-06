@@ -50,7 +50,7 @@ const UseEscrowPanel = () => {
             )
           }
           {
-            escAcc !== account ? (
+            escAcc === account ? (
                 <>
                   <Button className="ms-lg-2" variant="success"
                           onClick={() => setShowRefundModal(true)}>Refund
