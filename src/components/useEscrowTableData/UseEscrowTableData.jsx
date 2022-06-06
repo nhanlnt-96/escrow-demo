@@ -1,6 +1,6 @@
 import './UseEscrowTableData.scss';
 import React, {Fragment, useEffect, useState} from 'react';
-import {Button, Form, Table} from 'react-bootstrap';
+import {Button, Form, Spinner, Table} from 'react-bootstrap';
 import {useEthers} from '@usedapp/core';
 import {
   approveRequest,
@@ -35,13 +35,17 @@ const UseEscrowTableData = () => {
     content: '',
   });
   const [showDataItemModal, setShowDataItemModal] = useState(false);
+  const isLoadingInitialState = {status: false, itemId: null, type: null};
+  const [isLoading, setIsLoading] = useState(isLoadingInitialState);
 
   const handleApproveRequest = async (itemIdInput) => {
+    setIsLoading({itemId: itemIdInput, status: true});
     if (receiver === '') {
       setNotiMsg({
         title: 'Error',
         content: 'Fill the fields',
       });
+      setIsLoading(isLoadingInitialState);
       return;
     }
 
@@ -52,6 +56,7 @@ const UseEscrowTableData = () => {
         title: 'Error',
         content: 'Item not requested.',
       });
+      setIsLoading(isLoadingInitialState);
       return;
     }
     const res = await approveRequest(
@@ -64,15 +69,22 @@ const UseEscrowTableData = () => {
       title: '',
       content: res.message ? res.message : res,
     });
+    setIsLoading(isLoadingInitialState);
   };
 
   const handleConfirmDelivery = async (flag, itemIdInput) => {
+    setIsLoading({
+      status: true,
+      itemId: itemIdInput,
+      type: flag ? 'confirm' : 'dispute',
+    });
     const res = await confirmDelivery(library.provider, account,
         parseInt(itemIdInput), flag);
     setNotiMsg({
       title: '',
-      content: res,
+      content: res.message ? res.message : res,
     });
+    setIsLoading(isLoadingInitialState);
   };
 
   useEffect(() => {
@@ -137,19 +149,73 @@ const UseEscrowTableData = () => {
                                               onChange={(e) => setReceiver(
                                                   e.target.value)}/>
                                 <Button variant="primary"
+                                        disabled={isLoading.status &&
+                                            isLoading.itemId === itemId}
                                         onClick={() => handleApproveRequest(
-                                            itemId)}>Approve
-                                  Request</Button>
+                                            itemId)}>
+                                  {
+                                    isLoading.status &&
+                                    isLoading.itemId === itemId ? (
+                                        <>
+                                          Approving Request
+                                          < Spinner animation="border"
+                                                    variant="light"
+                                                    size="sm"
+                                                    className="ms-2"/>
+                                        </>
+                                    ) : (
+                                        'Approve Request'
+                                    )
+                                  }
+                                </Button>
                               </>
                           ) : status === '2' && provided ? (
                               <div>
                                 <Button variant="primary"
+                                        disabled={isLoading.status &&
+                                            isLoading.itemId === itemId &&
+                                            isLoading.type === 'confirm'}
                                         onClick={() => handleConfirmDelivery(
-                                            true, itemId)}>Confirm
-                                  Delivery</Button>
-                                <Button variant="secondary" className="ms-2"
+                                            true, itemId)}>
+                                  {
+                                    isLoading.status &&
+                                    isLoading.itemId === itemId &&
+                                    isLoading.type === 'confirm' ? (
+                                        <>
+                                          Confirming Delivery
+                                          < Spinner animation="border"
+                                                    variant="light"
+                                                    size="sm"
+                                                    className="ms-2"/>
+                                        </>
+                                    ) : (
+                                        'Confirm Delivery'
+                                    )
+                                  }
+                                </Button>
+                                <Button variant="secondary"
+                                        className="ms-2"
+                                        disabled={isLoading.status &&
+                                            isLoading.itemId === itemId &&
+                                            isLoading.type === 'depute'}
                                         onClick={() => handleConfirmDelivery(
-                                            false, itemId)}>Dispute</Button>
+                                            false, itemId)}>Dispute
+                                  {
+                                    isLoading.status &&
+                                    isLoading.itemId === itemId &&
+                                    isLoading.type === 'depute' ? (
+                                        <>
+                                          Disputing
+                                          < Spinner animation="border"
+                                                    variant="light"
+                                                    size="sm"
+                                                    className="ms-2"/>
+                                        </>
+                                    ) : (
+                                        'Dispute'
+                                    )
+                                  }
+                                </Button>
                               </div>
                           ) : ''
                         }
