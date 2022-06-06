@@ -1,6 +1,6 @@
 import './UseEscrowTableData.scss';
 import React, {Fragment, useEffect, useState} from 'react';
-import {Button, Form, Spinner, Table} from 'react-bootstrap';
+import {Button, Container, Form, Spinner, Table} from 'react-bootstrap';
 import {useEthers} from '@usedapp/core';
 import {
   approveRequest,
@@ -11,6 +11,7 @@ import {
 import {toEther} from '../../utils/utils';
 import ToastNotification from '../toastNotification/ToastNotification';
 import {EscrowDataItemModal} from './components/EscrowDataItemModal';
+import UseEscrowPanel from '../useEscrowPanel/UseEscrowPanel';
 
 export const statusLabel = [
   'OPEN',
@@ -45,6 +46,7 @@ const UseEscrowTableData = () => {
         title: 'Error',
         content: 'Fill the fields',
       });
+      setReceiver('');
       setIsLoading(isLoadingInitialState);
       return;
     }
@@ -56,6 +58,7 @@ const UseEscrowTableData = () => {
         title: 'Error',
         content: 'Item not requested.',
       });
+      setReceiver('');
       setIsLoading(isLoadingInitialState);
       return;
     }
@@ -69,6 +72,7 @@ const UseEscrowTableData = () => {
       title: '',
       content: res.message ? res.message : res,
     });
+    setReceiver('');
     setIsLoading(isLoadingInitialState);
   };
 
@@ -104,8 +108,9 @@ const UseEscrowTableData = () => {
   }, [account]);
 
   return (
-      <div>
+      <Container fluid="xxl">
         <h2 className="h2 text-center my-4">My Data</h2>
+        <UseEscrowPanel/>
         <Table responsive className="use-escrow-table___container">
           <thead className="use-escrow-table___head">
           <tr>
@@ -237,7 +242,7 @@ const UseEscrowTableData = () => {
         <ToastNotification errorMsg={notiMsg.content}
                            setErrMsg={setNotiMsg}
                            titleNoti={notiMsg.title}/>
-      </div>
+      </Container>
   );
 };
 

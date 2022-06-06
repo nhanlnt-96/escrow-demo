@@ -1,2 +1,2 @@
 export * from './EscrowInfoPopover';
-export * from './EscrowCreateItemModal';
+export * from '../../useEscrowPanel/components/EscrowCreateItemModal';
