@@ -1,5 +1,5 @@
-import "./UseEscrow.scss";
-import React, {useEffect, useState} from "react";
+import "./UseEscrowTableData.scss";
+import React, {Fragment, useEffect, useState} from 'react';
 import {Button, Form, Table} from "react-bootstrap";
 import {useEthers} from "@usedapp/core";
 import {approveRequest, confirmDelivery, getItems, getRequested} from "../../utils/escrow";
@@ -17,7 +17,7 @@ export const statusLabel = [
   "WITHDRAWED",
 ];
 
-const UseEscrow = () => {
+const UseEscrowTableData = () => {
   const {
     account,
     library,
@@ -111,8 +111,8 @@ const UseEscrow = () => {
               provided
             } = val;
             return (
-              <>
-                <tr key={index} className="use-escrow-table__body__row">
+              <Fragment key={index}>
+                <tr className="use-escrow-table__body__row">
                   <td className="use-escrow-table__body__item">{itemId}</td>
                   <td className="use-escrow-table__body__item item-hover"
                       onClick={() => setShowDataItemModal(true)}>{purpose}</td>
@@ -142,7 +142,7 @@ const UseEscrow = () => {
                   </td>
                 </tr>
                 <EscrowDataItemModal data={val} show={showDataItemModal} setShow={setShowDataItemModal}/>
-              </>
+              </Fragment>
             );
           }) : (
             <td colSpan={6} className="text-center fst-italic use-escrow-table__body__item">No data.</td>
@@ -157,4 +157,4 @@ const UseEscrow = () => {
   );
 };
 
-export default UseEscrow;
+export default UseEscrowTableData;

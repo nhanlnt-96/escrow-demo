@@ -1,7 +1,7 @@
 import {Button, Col, Dropdown, Modal, Row} from "react-bootstrap";
 import React from "react";
 import {toEther} from "../../../utils/utils";
-import {statusLabel} from "../UseEscrow";
+import {statusLabel} from "../UseEscrowTableData";
 
 export const EscrowDataItemModal = ({
                                       data,

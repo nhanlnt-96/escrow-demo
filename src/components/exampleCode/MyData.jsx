@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useEthers } from '@usedapp/core';
-import { getItems } from '../utils/escrow';
+import { getItems } from '../../utils/escrow';
 import Item from './Item';
 
 export default function MyData() {

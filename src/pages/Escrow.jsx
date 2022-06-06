@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import MyData from "../components/MyData";
-// import UseEscrowExample from "../components/UseEscrow";
+// import MyData from "../components/exampleCode/MyData";
+import UseEscrowExample from "../components/UseEscrow";
 import {useEthers} from "@usedapp/core";
 import Ownerpannel from "../components/Ownerpannel";
 import {getEscAcc} from "./../utils/escrow";
-import UseEscrow from "../components/useEscrow/UseEscrow";
+import UseEscrowTableData from "../components/useEscrowTableData/UseEscrowTableData";
 
 export default function Escrow() {
   const {account} = useEthers();
@@ -26,9 +26,9 @@ export default function Escrow() {
           </div>
           : ""
       }
-      {/*<UseEscrowExample/>*/}
-      <UseEscrow/>
-      <MyData/>
+      <UseEscrowExample/>
+      <UseEscrowTableData/>
+      {/*<MyData/>*/}
     </div>
   );
 }
