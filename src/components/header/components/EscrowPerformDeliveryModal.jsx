@@ -1,13 +1,16 @@
 import {Button, Form, Modal, Spinner} from 'react-bootstrap';
 import React, {useState} from 'react';
-import {requestItem} from '../../../utils/escrow';
+import {
+  getItem,
+  performDelivery,
+} from '../../../utils/escrow';
 import {useEthers} from '@usedapp/core';
 import ToastNotification from '../../toastNotification/ToastNotification';
 
-export const EscrowRequestItemModal = ({
-                                         show,
-                                         setShow,
-                                       }) => {
+export const EscrowPerformDeliveryModal = ({
+                                             show,
+                                             setShow,
+                                           }) => {
   const {account, library} = useEthers();
   const [itemId, setItemId] = useState('');
   const [notiMsg, setNotiMsg] = useState({
@@ -16,7 +19,7 @@ export const EscrowRequestItemModal = ({
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleRequestItem = async () => {
+  const handlePerformDelivery = async () => {
     setIsLoading(true);
     const itemIdAfterParse = parseInt(itemId);
     if (isNaN(itemIdAfterParse)) {
@@ -26,7 +29,34 @@ export const EscrowRequestItemModal = ({
       });
       return;
     }
-    const res = await requestItem(library.provider, account, itemId);
+
+    const item = await getItem(itemIdAfterParse);
+    if (item.provider !== account) {
+      setNotiMsg({
+        title: 'Error',
+        content: 'Service not awarded to you',
+      });
+      handleCloseModal();
+      return;
+    }
+    if (item.provided) {
+      setNotiMsg({
+        title: 'Error',
+        content: 'Service already provided',
+      });
+      handleCloseModal();
+      return;
+    }
+    if (item.confirmed) {
+      setNotiMsg({
+        title: 'Error',
+        content: 'Service already confirmed',
+      });
+      handleCloseModal();
+      return;
+    }
+
+    const res = await performDelivery(library.provider, account, itemId);
     setNotiMsg({
       title: '',
       content: res.message ? res.message : res,
@@ -50,7 +80,7 @@ export const EscrowRequestItemModal = ({
             centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Escrow Request Item</Modal.Title>
+            <Modal.Title>Escrow Perform Delivery</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form.Group className="mb-3">
@@ -68,18 +98,18 @@ export const EscrowRequestItemModal = ({
             </Button>
             <Button variant="primary"
                     disabled={!itemId || isLoading}
-                    onClick={handleRequestItem}>
+                    onClick={handlePerformDelivery}>
               {
                 isLoading ? (
                     <>
-                      Requesting
+                      Performing
                       < Spinner animation="border"
                                 variant="light"
                                 size="sm"
                                 className="ms-2"/>
                     </>
                 ) : (
-                    'Request Item'
+                    'Perform Delivery'
                 )
               }
             </Button>

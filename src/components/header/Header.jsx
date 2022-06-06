@@ -4,6 +4,9 @@ import {shortenAddress, useEthers} from '@usedapp/core';
 import {Button, Container, Nav, Navbar} from 'react-bootstrap';
 import {EscrowCreateItemModal, EscrowInfoPopover} from './components';
 import {EscrowRequestItemModal} from './components/EscrowRequestItemModal';
+import {
+  EscrowPerformDeliveryModal,
+} from './components/EscrowPerformDeliveryModal';
 
 const Header = () => {
   const {
@@ -14,6 +17,8 @@ const Header = () => {
   } = useEthers();
   const [showCreateItemModal, setShowCreateItemModal] = useState(false);
   const [showRequestItemModal, setShowRequestItemModal] = useState(false);
+  const [showPerformDeliveryModal, setShowPerformDeliveryModal] = useState(
+      false);
 
   return (
       <>
@@ -33,12 +38,23 @@ const Header = () => {
                                    children={
                                      <Navbar.Text className="header-left__item">Escrow
                                        Information</Navbar.Text>}/>
-                <Navbar.Text className="header-left__item ms-lg-2"
-                             onClick={() => setShowCreateItemModal(true)}>Escrow
-                  Create Item</Navbar.Text>
-                <Navbar.Text className="header-left__item ms-lg-2"
-                             onClick={() => setShowRequestItemModal(true)}>Escrow
-                  Request Item</Navbar.Text>
+                {
+                    account && chainId === 80001 && (
+                        <>
+                          <Navbar.Text className="header-left__item ms-lg-2"
+                                       onClick={() => setShowCreateItemModal(true)}>Escrow
+                            Create Item</Navbar.Text>
+                          <Navbar.Text className="header-left__item ms-lg-2"
+                                       onClick={() => setShowRequestItemModal(
+                                           true)}>Escrow
+                            Request Item</Navbar.Text>
+                          <Navbar.Text className="header-left__item ms-lg-2"
+                                       onClick={() => setShowPerformDeliveryModal(
+                                           true)}>Escrow
+                            Perform Delivery</Navbar.Text>
+                        </>
+                    )
+                }
               </Nav>
               <Nav>
                 {
@@ -78,6 +94,8 @@ const Header = () => {
                                setShow={setShowCreateItemModal}/>
         <EscrowRequestItemModal show={showRequestItemModal}
                                 setShow={setShowRequestItemModal}/>
+        <EscrowPerformDeliveryModal show={showPerformDeliveryModal}
+                                    setShow={setShowPerformDeliveryModal}/>
       </>
   );
 };
