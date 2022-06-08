@@ -1,8 +1,8 @@
 import './Header.scss';
-import React from 'react';
+import React, {useState} from 'react';
 import {shortenAddress, useEthers} from '@usedapp/core';
 import {Button, Container, Nav, Navbar} from 'react-bootstrap';
-import {EscrowInfoPopover} from './components';
+import {EscrowInfoModal} from './components';
 
 const Header = () => {
   const {
@@ -11,6 +11,7 @@ const Header = () => {
     deactivate,
     activateBrowserWallet,
   } = useEthers();
+  const [showEscrowInfoModal, setShowEscrowInfoModal] = useState(false);
 
   return (
       <>
@@ -19,17 +20,16 @@ const Header = () => {
                 className="header-container"
                 bg="dark"
                 variant="dark">
-          <Container>
+          <Container fluid="xxl">
             <Navbar.Brand className="header-logo">
               <h2>Escrow</h2>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto header-left">
-                <EscrowInfoPopover placement={'bottom'}
-                                   children={
-                                     <Navbar.Text className="header-left__item">Escrow
-                                       Information</Navbar.Text>}/>
+                <Navbar.Text className="header-left__item"
+                             onClick={() => setShowEscrowInfoModal(true)}>Escrow
+                  Information</Navbar.Text>
               </Nav>
               <Nav>
                 {
@@ -65,6 +65,8 @@ const Header = () => {
                 </Navbar>
             )
         }
+        <EscrowInfoModal show={showEscrowInfoModal}
+                         setShow={setShowEscrowInfoModal}/>
       </>
   );
 };
