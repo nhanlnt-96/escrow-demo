@@ -50,7 +50,7 @@ export const RefundItem = ({
             keyboard={false}
             centered
         >
-          <Modal.Header closeButton>
+          <Modal.Header className="bg-dark text-white" closeButton={false}>
             <Modal.Title>Refund Item</Modal.Title>
           </Modal.Header>
           <Modal.Body>

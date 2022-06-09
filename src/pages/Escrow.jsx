@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 // import MyData from "../components/exampleCode/MyData";
 // import UseEscrowExample from "../components/UseEscrow";
 import {useEthers} from '@usedapp/core';
-import Ownerpannel from '../components/Ownerpannel';
+import Ownerpannel from '../components/exampleCode/Ownerpannel';
 import {getEscAcc} from './../utils/escrow';
 import UseEscrowTableData
   from '../components/useEscrowTableData/UseEscrowTableData';

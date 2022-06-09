@@ -1,13 +1,9 @@
-import {Button, Col, Dropdown, Modal, Row} from "react-bootstrap";
+import { Badge, Button, Col, Dropdown, Modal, Row } from "react-bootstrap";
 import React from "react";
-import {toEther} from "../../../utils/utils";
-import {statusLabel} from "../UseEscrowTableData";
+import { toEther } from "../../../utils/utils";
+import { statusLabel } from "../UseEscrowTableData";
 
-export const EscrowDataItemModal = ({
-                                      data,
-                                      show,
-                                      setShow
-                                    }) => {
+export const EscrowDataItemModal = ({ data, show, setShow }) => {
   const {
     itemId,
     purpose,
@@ -17,7 +13,7 @@ export const EscrowDataItemModal = ({
     provider,
     status,
     provided,
-    confirmed
+    confirmed,
   } = data;
   return (
     <Modal
@@ -27,8 +23,10 @@ export const EscrowDataItemModal = ({
       keyboard={false}
       centered
     >
-      <Modal.Header closeButton>
-        <Modal.Title>[{itemId}]: {purpose}</Modal.Title>
+      <Modal.Header className="bg-dark text-white" closeButton={false}>
+        <Modal.Title>
+          [{itemId}]: {purpose}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Row>
@@ -45,28 +43,36 @@ export const EscrowDataItemModal = ({
             <h6 className="h6 text-center">{toEther(amount)}</h6>
           </Col>
         </Row>
-        <Dropdown.Divider/>
+        <Dropdown.Divider />
         <Row>
           <p className="text-center mb-1">Time</p>
-          <h6 className="h6 text-center">{(new Date(parseInt(timestamp) * 1000)).toString()}</h6>
+          <h6 className="h6 text-center">
+            {new Date(parseInt(timestamp) * 1000).toString()}
+          </h6>
         </Row>
-        <Dropdown.Divider/>
+        <Dropdown.Divider />
         <Row>
           <p className="text-center mb-1">Owner</p>
           <h6 className="h6 text-center">{owner}</h6>
         </Row>
-        <Dropdown.Divider/>
+        <Dropdown.Divider />
         <Row>
           <Col sm={12} lg={6}>
             <p className="text-center mb-1">Provider</p>
             <h6 className="h6 text-center">{toEther(provider)}</h6>
           </Col>
-          <Col sm={12} lg={6}>
+          <Col
+            sm={12}
+            lg={6}
+            className="d-flex flex-column justify-content-center align-items-center"
+          >
             <p className="text-center mb-1">Status</p>
-            <h6 className="h6 text-center">{statusLabel[status]}</h6>
+            <Badge bg={statusLabel?.[status].status}>
+              {statusLabel?.[status].label}
+            </Badge>
           </Col>
         </Row>
-        <Dropdown.Divider/>
+        <Dropdown.Divider />
         <Row>
           <Col sm={12} lg={6}>
             <p className="text-center mb-1">Provided</p>

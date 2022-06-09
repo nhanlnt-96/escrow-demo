@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useEthers } from '@usedapp/core';
-import { createItem, performDelivery } from '../utils/escrow';
-import { requestItem, getItem } from './../utils/escrow';
+import { createItem, performDelivery } from '../../utils/escrow';
+import { requestItem, getItem } from '../../utils/escrow';
 
 export default function UseEscrow() {
   const purposeRef = useRef()

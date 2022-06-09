@@ -49,7 +49,7 @@ export const EscrowRequestItemModal = ({
             keyboard={false}
             centered
         >
-          <Modal.Header closeButton>
+          <Modal.Header className="bg-dark text-white" closeButton={false}>
             <Modal.Title>Escrow Request Item</Modal.Title>
           </Modal.Header>
           <Modal.Body>

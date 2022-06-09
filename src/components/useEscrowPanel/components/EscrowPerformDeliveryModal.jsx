@@ -79,7 +79,7 @@ export const EscrowPerformDeliveryModal = ({
             keyboard={false}
             centered
         >
-          <Modal.Header closeButton>
+          <Modal.Header className="bg-dark text-white" closeButton={false}>
             <Modal.Title>Escrow Perform Delivery</Modal.Title>
           </Modal.Header>
           <Modal.Body>

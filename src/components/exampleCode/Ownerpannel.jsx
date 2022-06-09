@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { useEthers } from '@usedapp/core';
-import { refundItem, withdrawFund } from '../utils/escrow';
+import { refundItem, withdrawFund } from '../../utils/escrow';
 
 export default function Ownerpannel() {
 
