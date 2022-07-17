@@ -1,13 +1,12 @@
 import MainLayout from './layouts/MainLayout';
 import Escrow from './pages/Escrow';
 
-import './assets/styles/styles.scss'
-
 function App() {
   return (
-    <MainLayout>
-      <Escrow />
-    </MainLayout>
+    <h1 className="text-2xl bg-blue-500 text-white">test tailwind</h1>
+    // <MainLayout>
+    //   <Escrow />
+    // </MainLayout>
   );
 }
 
