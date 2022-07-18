@@ -4,6 +4,7 @@ import {routes} from "configs";
 import HeaderComp from "../components/headerComp";
 
 const MainLayout = () => {
+  // TODO: change height of parent div
   return (
     <div className="w-screen h-screen relative">
       <HeaderComp/>
