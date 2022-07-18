@@ -1,14 +1,12 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import { routes } from "configs";
-import Header from "../components/Header";
+import {Route, Routes} from "react-router-dom";
+import {routes} from "configs";
 import HeaderComp from "../components/headerComp";
-import ChooseCurrencyPopup from "../components/chooseCurrencyPopup";
 
 const MainLayout = () => {
   return (
     <div className="w-screen h-screen">
-      <HeaderComp />
+      <HeaderComp/>
       <Routes>
         {routes.map((val, index) => (
           <Route
@@ -19,7 +17,6 @@ const MainLayout = () => {
           />
         ))}
       </Routes>
-      <ChooseCurrencyPopup />
     </div>
   );
 };
