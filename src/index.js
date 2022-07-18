@@ -1,14 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./assets/styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import {DAppProvider} from "@usedapp/core";
+import { DAppProvider } from "@usedapp/core";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <DAppProvider config={{}}>
     <React.StrictMode>
-      <App/>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </React.StrictMode>
   </DAppProvider>,
   document.getElementById("root")

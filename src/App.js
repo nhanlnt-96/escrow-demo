@@ -1,13 +1,8 @@
-import MainLayout from './layouts/MainLayout';
-import Escrow from './pages/Escrow';
+import React from "react";
+import MainLayout from "layouts";
 
 function App() {
-  return (
-    <h1 className="text-2xl bg-blue-500 text-white">test tailwind</h1>
-    // <MainLayout>
-    //   <Escrow />
-    // </MainLayout>
-  );
+  return <MainLayout />;
 }
 
 export default App;
