@@ -15,9 +15,12 @@ module.exports = {
     colors: {
       transparent: "transparent",
       current: "currentColor",
-      black: colors.black,
+      black: {
+        DEFAULT: colors.black,
+        light: "rgba(0, 0, 0, .4)",
+      },
       white: colors.white,
-      gray: colors.coolGray,
+      gray: { DEFAULT: colors.coolGray, light: "rgb(133, 154, 181)" },
       red: colors.red,
       yellow: colors.amber,
       green: colors.emerald,
@@ -27,6 +30,9 @@ module.exports = {
       pink: { DEFAULT: colors.pink, "head-alt": "#fe8f9c" },
       violet: {
         DEFAULT: "#120f54",
+        light: "#382590",
+        "hover-color": "#571ce0",
+        "hover-alt-color": "#291b6b",
       },
     },
     spacing: {
@@ -154,6 +160,7 @@ module.exports = {
       "2xl": "1rem",
       "3xl": "1.5rem",
       full: "9999px",
+      "30px": "30px",
     },
     borderWidth: {
       DEFAULT: "1px",
