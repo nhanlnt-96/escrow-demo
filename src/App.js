@@ -1,16 +1,15 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./assets/styles/styles.scss";
-
 import React from "react";
 import MainLayout from "./layouts/MainLayout";
 import Escrow from "./pages/Escrow";
 
-
 function App() {
   return (
-    <MainLayout>
-      <Escrow/>
-    </MainLayout>
+    <h1 className="text-white bg-blue-400 underline font-bold">
+      test tailwind
+    </h1>
+    // <MainLayout>
+    //   <Escrow/>
+    // </MainLayout>
   );
 }
 

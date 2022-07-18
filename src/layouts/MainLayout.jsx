@@ -1,13 +1,11 @@
 import React from "react";
-import Header from "../components/header/Header";
+import Header from "../components/Header";
 
-export default function MainLayout({children}) {
+export default function MainLayout({ children }) {
   return (
     <div>
-      <Header/>
-      <main>
-        {children}
-      </main>
+      <Header />
+      <main>{children}</main>
     </div>
   );
 }

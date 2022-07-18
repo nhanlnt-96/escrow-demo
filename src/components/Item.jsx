@@ -1,8 +1,8 @@
 import React, { useRef } from 'react'
-import { approveRequest, getRequested } from '../../utils/escrow';
-import { toEther } from '../../utils/utils';
+import { approveRequest, getRequested } from '../utils/escrow';
+import { toEther } from '../utils/utils';
 import { useEthers } from '@usedapp/core';
-import { confirmDelivery } from '../../utils/escrow';
+import { confirmDelivery } from '../utils/escrow';
 
 const status = [
   'OPEN',
