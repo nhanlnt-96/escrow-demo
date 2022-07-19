@@ -1,8 +1,7 @@
-import React from "react";
+import React  from "react";
 import { Route, Routes } from "react-router-dom";
 import { routes } from "configs";
 import HeaderComp from "../components/headerComp";
-import ChooseCurrencyPopup from "../components/chooseCurrencyPopup";
 
 const MainLayout = () => {
   return (
@@ -20,7 +19,6 @@ const MainLayout = () => {
           ))}
         </Routes>
       </div>
-      <ChooseCurrencyPopup />
     </div>
   );
 };
