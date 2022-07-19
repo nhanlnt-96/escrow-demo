@@ -43,6 +43,7 @@ module.exports = {
         light: "#382590",
         "hover-color": "#571ce0",
         "hover-alt-color": "#291b6b",
+        "fixed-color": "#2d0572"
       },
     },
     spacing: {
