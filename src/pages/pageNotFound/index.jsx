@@ -1,7 +1,7 @@
 import "./PageNotFound.scss";
 import React from "react";
 import NotFoundImage from "assets/images/404.png";
-import ButtonComp from "../../components/buttonComp";
+import ButtonComp from "components/buttonComp";
 import { useNavigate } from "react-router-dom";
 
 const PageNotFound = () => {

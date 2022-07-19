@@ -1,6 +1,11 @@
 import React from "react";
 
-const ButtonComp = ({ label, isPrimary, isDisabled, btnAction }) => {
+const ButtonComp = ({
+                      label,
+                      isPrimary,
+                      isDisabled,
+                      btnAction
+                    }) => {
   return (
     <div
       className={

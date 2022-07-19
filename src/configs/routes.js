@@ -1,7 +1,7 @@
-import CreateItem from "../pages/createItem";
-import RequestItem from "../pages/requestItem";
-import PageNotFound from "../pages/pageNotFound";
-import Escrow from "../pages/Escrow";
+import CreateItem from "pages/createItem";
+import RequestItem from "pages/requestItem";
+import PageNotFound from "pages/pageNotFound";
+import Escrow from "pages/homepage";
 
 export const routes = [
   {

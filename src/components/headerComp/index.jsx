@@ -1,22 +1,17 @@
-import React, {useState} from "react";
-import {routes} from "configs";
-import {Link, useLocation} from "react-router-dom";
-import {useScrollWindow} from "utils";
-import {shortenAddress, useEthers} from "@usedapp/core";
-import ToastNotification from "../toastComp";
-import ButtonComp from "../buttonComp";
+import React, { useState } from "react";
+import { routes } from "configs";
+import { Link, useLocation } from "react-router-dom";
+import { useScrollWindow } from "utils";
+import { shortenAddress, useEthers } from "@usedapp/core";
+import ToastNotification from "components/toastComp";
+import ButtonComp from "components/buttonComp";
 
 const HeaderComp = () => {
-  const {pathname} = useLocation();
-  const {
-    account,
-    chainId,
-    deactivate,
-    activateBrowserWallet
-  } = useEthers();
+  const { pathname } = useLocation();
+  const { account, chainId, deactivate, activateBrowserWallet } = useEthers();
   const COORDINATES_SCROLL = useScrollWindow();
   const [isShowHeaderMenu, setIsShowHeaderMenu] = useState(false);
-  
+
   const handleConnect = () => {
     if (!account) {
       activateBrowserWallet();
@@ -24,25 +19,29 @@ const HeaderComp = () => {
       deactivate();
     }
   };
-  
+
   const onShowHeaderMenuBtnClick = () => {
     setIsShowHeaderMenu(!isShowHeaderMenu);
   };
   return (
     <>
       <nav
-        className={`border-gray-200 px-2 sm:px-4 py-2.5 transition-all ease-in-out fixed top-0 left-0 w-full text-white ${COORDINATES_SCROLL > 0 && "bg-violet-fixed-color shadow-lg"}`}
+        className={`border-gray-200 px-2 sm:px-4 py-2.5 transition-all ease-in-out fixed top-0 left-0 w-full text-white ${
+          COORDINATES_SCROLL > 0 && "bg-violet-fixed-color shadow-lg"
+        }`}
       >
         <div className="container flex flex-wrap justify-between items-center mx-auto">
           <a href="/" className="flex items-center">
-          <span className="self-center text-2xl font-semibold whitespace-nowrap">
-            Escrow
-          </span>
+            <span className="self-center text-2xl font-semibold whitespace-nowrap">
+              Escrow
+            </span>
           </a>
           <div className="flex md:order-2">
-            <ButtonComp label={account ? shortenAddress(account) : "Connect Wallet"}
-                        isPrimary={false}
-                        btnAction={handleConnect}/>
+            <ButtonComp
+              label={account ? shortenAddress(account) : "Connect Wallet"}
+              isPrimary={false}
+              btnAction={handleConnect}
+            />
             <button
               type="button"
               className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-0"
@@ -87,11 +86,12 @@ const HeaderComp = () => {
           </div>
         </div>
       </nav>
-      {
-        chainId !== 80001 && (
-          <ToastNotification errorMsg={"Wrong network. Please change your network."} isNotHide={true}/>
-        )
-      }
+      {chainId !== 80001 && (
+        <ToastNotification
+          errorMsg={"Wrong network. Please change your network."}
+          isNotHide={true}
+        />
+      )}
     </>
   );
 };

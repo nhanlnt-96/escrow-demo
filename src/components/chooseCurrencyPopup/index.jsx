@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DropdownComp } from "./components";
 import { cryptoCurrencyList } from "configs";
-import ButtonComp from "../buttonComp";
+import ButtonComp from "components/buttonComp";
 
 const ChooseCurrencyPopup = ({ setIsVisible }) => {
   const [fromCryptoValue, setFromCryptoValue] = useState(null);

@@ -1,11 +1,9 @@
+import "./Homepage.scss";
 import React, { useEffect, useState } from "react";
-import EscrowInfo from "../components/EscrowInfo";
-import MyData from "../components/MyData";
-import UseEscrow from "../components/UseEscrow";
 import { useEthers } from "@usedapp/core";
-import Ownerpannel from "../components/Ownerpannel";
 import { getEscAcc } from "utils/escrow";
-import ChooseCurrencyPopup from "../components/chooseCurrencyPopup";
+import SectionBanner from "components/sectionBanner";
+import HomepageImage from "assets/images/section-header.png";
 
 export default function Escrow() {
   const { account } = useEthers();
@@ -20,10 +18,8 @@ export default function Escrow() {
   }, []);
 
   return (
-    <div className="Escrow">
-      <div className="">
-
-      </div>
+    <div className="homepage">
+      <SectionBanner image={HomepageImage} title={"Currency Bet"} />
       {/*<EscrowInfo />*/}
       {/*<div className="line"></div>*/}
 
@@ -40,9 +36,9 @@ export default function Escrow() {
       {/*<div className="line"></div>*/}
 
       {/*<MyData />*/}
-      {isShowChooseCurrencyModal && (
-        <ChooseCurrencyPopup setIsVisible={setIsShowCurrencyModal} />
-      )}
+      {/*{isShowChooseCurrencyModal && (*/}
+      {/*  <ChooseCurrencyPopup setIsVisible={setIsShowCurrencyModal} />*/}
+      {/*)}*/}
     </div>
   );
 }
