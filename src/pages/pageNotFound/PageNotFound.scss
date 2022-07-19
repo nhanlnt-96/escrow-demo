@@ -1,0 +1,11 @@
+.pnf {
+  &-image {
+    &__container {
+      max-width: 546px;
+    }
+
+    &__wrapper {
+      padding-bottom: calc(398 / 546 * 100%);
+    }
+  }
+}
