@@ -14,13 +14,13 @@ const ToastNotification = ({
         }, 2000);
       }
     }
-  }, [errorMsg]);
+  }, [errorMsg, isNotHide]);
   return (
     <>
       {
         showToast && (
           <div
-            className="flex items-center p-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow absolute right-0.5 bottom-0.5">
+            className="flex items-center p-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow absolute right-2 bottom-2 fixed">
             <div className="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-white bg-red-800 rounded-lg">
               <svg aria-hidden="true"
                    className="w-5 h-5"
