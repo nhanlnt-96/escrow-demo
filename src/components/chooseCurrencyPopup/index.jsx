@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {DropdownComp} from "./components";
 import {cryptoCurrencyList} from "configs";
+import ButtonComp from "../buttonComp";
 
 const ChooseCurrencyPopup = () => {
   const [fromCryptoValue, setFromCryptoValue] = useState(null);
@@ -70,15 +71,10 @@ const ChooseCurrencyPopup = () => {
                               value={toCryptoValue}
                               setValue={setToCryptoValue}/>
               </div>
-              <div className="rounded-30px border border-violet-hover-color p-1.5">
-                <button disabled={!fromCryptoValue || !toCryptoValue}
-                        type="submit"
-                        onClick={(e) => onChooseCryptoBtnClick(e)}
-                        className={`py-2.5 px-8 text-center bg-violet-hover-color transition-all border-violet-hover-color border rounded-3xl w-full font-bold text-lg ${(fromCryptoValue && toCryptoValue) ? "hover:bg-violet-hover-alt-color" : "cursor-not-allowed"}`}
-                >
-                  Choose
-                </button>
-              </div>
+              <ButtonComp label={"Choose"}
+                          btnAction={onChooseCryptoBtnClick}
+                          isDisabled={!fromCryptoValue || !toCryptoValue}
+                          isPrimary={true}/>
             </form>
           </div>
         </div>

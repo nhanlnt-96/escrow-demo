@@ -4,6 +4,7 @@ import {Link, useLocation} from "react-router-dom";
 import {useScrollWindow} from "utils";
 import {shortenAddress, useEthers} from "@usedapp/core";
 import ToastNotification from "../toastComp";
+import ButtonComp from "../buttonComp";
 
 const HeaderComp = () => {
   const {pathname} = useLocation();
@@ -39,13 +40,9 @@ const HeaderComp = () => {
           </span>
           </a>
           <div className="flex md:order-2">
-            <button
-              type="button"
-              className="text-white bg-pink-head-alt hover:bg-pink-DEFAULT-500 focus:ring-0 focus:outline-none font-medium rounded-lg text-base px-5 py-2.5 text-center mr-3 md:mr-0 transition-all ease-in-out"
-              onClick={handleConnect}
-            >
-              {account ? shortenAddress(account) : "Connect Wallet"}
-            </button>
+            <ButtonComp label={account ? shortenAddress(account) : "Connect Wallet"}
+                        isPrimary={false}
+                        btnAction={handleConnect}/>
             <button
               type="button"
               className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-0"
