@@ -89,7 +89,7 @@ export const DropdownComp = ({
               className="flex justify-center items-center py-3 px-6 transition-all cursor-pointer hover:bg-gray-lighter"
               onClick={() => onSelectCurrencyCrypto(val)}
             >
-              <div className="flex items-center flex-1">
+              <div className="flex flex-col md:flex-row md:items-center flex-1">
                 <div className="flex items-center">
                   <img src={val.icon} alt={val.name}/>
                   <p className="font-bold uppercase ml-4 text-black text-lg">{val.symbol}</p>

@@ -26,7 +26,7 @@ const HeaderComp = () => {
   return (
     <>
       <nav
-        className={`border-gray-200 px-2 sm:px-4 py-2.5 transition-all ease-in-out fixed top-0 left-0 w-full text-white ${
+        className={`border-gray-200 px-2 sm:px-4 py-2.5 transition-all ease-in-out fixed top-0 left-0 w-full text-white z-50 ${
           COORDINATES_SCROLL > 0 && "bg-violet-fixed-color shadow-lg"
         }`}
       >

@@ -1,29 +1,19 @@
-import React, { useState } from "react";
-import { DropdownComp } from "./components";
+import React, { useContext } from "react";
 import { cryptoCurrencyList } from "configs";
 import ButtonComp from "components/buttonComp";
+import { DropdownComp } from "./DropdownComp";
+import { HomepageContext } from "pages/homepage";
 
-const ChooseCurrencyPopup = ({ setIsVisible }) => {
-  const [fromCryptoValue, setFromCryptoValue] = useState(null);
-  const [toCryptoValue, setToCryptoValue] = useState(null);
-
-  const onSwapCurrencyBtnClick = () => {
-    let flag = JSON.stringify(fromCryptoValue);
-    setFromCryptoValue(toCryptoValue);
-    setToCryptoValue(JSON.parse(flag));
-  };
-
-  const onChooseCryptoBtnClick = (e) => {
-    e.preventDefault();
-    console.log(
-      `from: ${fromCryptoValue.symbol} - to: ${toCryptoValue.symbol}`
-    );
-    onCloseModalBtnClick();
-  };
-
-  const onCloseModalBtnClick = () => {
-    setIsVisible(false);
-  };
+export const ChooseCurrencyPopup = () => {
+  const {
+    onCloseModalBtnClick,
+    onSwapCurrencyBtnClick,
+    onChooseCurrencyBtnClick,
+    fromCryptoValue,
+    setFromCryptoValue,
+    toCryptoValue,
+    setToCryptoValue,
+  } = useContext(HomepageContext);
   return (
     <div className="overflow-y-auto bg-black-light overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full h-full md:inset-0 h-modal md:h-full flex justify-center items-center">
       <div className="relative p-4 w-full max-w-xl h-full md:h-auto flex justify-center items-center">
@@ -52,7 +42,7 @@ const ChooseCurrencyPopup = ({ setIsVisible }) => {
             <h3 className="mb-8 text-2xl text-center font-medium text-white">
               Choosing pair of crypto
             </h3>
-            <form className="space-y-6" action="#">
+            <form className="space-y-6">
               <div>
                 <DropdownComp
                   label={"From"}
@@ -107,7 +97,7 @@ const ChooseCurrencyPopup = ({ setIsVisible }) => {
               </div>
               <ButtonComp
                 label={"Choose"}
-                btnAction={onChooseCryptoBtnClick}
+                btnAction={onChooseCurrencyBtnClick}
                 isDisabled={!fromCryptoValue || !toCryptoValue}
                 isPrimary={true}
               />
@@ -118,5 +108,3 @@ const ChooseCurrencyPopup = ({ setIsVisible }) => {
     </div>
   );
 };
-
-export default ChooseCurrencyPopup;
