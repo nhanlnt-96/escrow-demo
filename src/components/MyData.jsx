@@ -26,7 +26,7 @@ export default function MyData() {
 
 
   return (
-    <div>
+    <div className="text-white">
       {
         account ? 
           <div>

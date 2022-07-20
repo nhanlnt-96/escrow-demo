@@ -1,0 +1,32 @@
+.currency-list {
+  &__table {
+    tr {
+      background-color: #291b6b;
+      border-bottom: 1px solid #5946b5;
+    }
+
+    th {
+      color: #ffffff;
+      text-align: center;
+      vertical-align: middle;
+      padding: 8px;
+      font-size: 18px;
+    }
+
+    td {
+      color: #ffffff;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 18px;
+      padding: 8px;
+
+      img {
+        display: unset;
+      }
+    }
+
+    tbody {
+      vertical-align: inherit;
+    }
+  }
+}

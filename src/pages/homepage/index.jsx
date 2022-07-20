@@ -1,4 +1,3 @@
-import "./Homepage.scss";
 import React, { createContext, useEffect, useState } from "react";
 import { useEthers } from "@usedapp/core";
 import { getEscAcc } from "utils/escrow";
@@ -9,6 +8,7 @@ import Ownerpannel from "components/Ownerpannel";
 import UseEscrow from "components/UseEscrow";
 import MyData from "components/MyData";
 import { ChooseCurrencyHeader, ChooseCurrencyPopup } from "./components";
+import CurrencyList from "../../components/currencyList";
 
 export const HomepageContext = createContext(null);
 
@@ -58,11 +58,11 @@ const Homepage = () => {
         setToCryptoValue,
       }}
     >
-      <div className="homepage">
+      <div className="homepage pb-6">
         <SectionBanner image={HomepageImage} title={"Currency List"} />
         <div className="container px-3 xl:px-0 mx-auto">
           <ChooseCurrencyHeader />
-          <MyData />
+          <CurrencyList />
         </div>
       </div>
       {/*<EscrowInfo />*/}

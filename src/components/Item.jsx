@@ -72,6 +72,7 @@ export default function Item({ item }) {
           </div>
         ) : ''
       }
+      <br/>
     </div>
   )
 }
