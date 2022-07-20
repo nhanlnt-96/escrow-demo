@@ -1,5 +1,5 @@
-.section-banner {
-  &__wrapper {
-    padding-bottom: calc(600 / 1300 * 100%);
+.section-banner__parallax {
+  .react-parallax-content {
+    height: 100%;
   }
 }

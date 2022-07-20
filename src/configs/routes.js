@@ -1,14 +1,14 @@
 import CreateItem from "pages/createItem";
 import RequestItem from "pages/requestItem";
 import PageNotFound from "pages/pageNotFound";
-import Escrow from "pages/homepage";
+import Homepage from "pages/homepage";
 
 export const routes = [
   {
     label: "Home",
     path: "/",
     isExact: true,
-    module: <Escrow />,
+    module: <Homepage />,
   },
   {
     label: "Create Item",

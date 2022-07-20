@@ -466,6 +466,7 @@ module.exports = {
       full: "100%",
       screen: "100vh",
       "minus-header": "calc(100vh - 70px)",
+      "480px": "480px",
     }),
     inset: (theme, { negative }) => ({
       auto: "auto",
