@@ -28,7 +28,7 @@ const CurrencyList = () => {
   const ITEM_PER_PAGE = 10;
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [previousePage, setPreviousPage] = useState(0);
+  const [previousPage, setPreviousPage] = useState(0);
   const [receiverInput, setReceiverInput] = useState("");
   const { library, account } = useEthers();
   const [myItems, setMyItems] = useState([]);
@@ -49,25 +49,11 @@ const CurrencyList = () => {
     func();
   }, [account]);
 
-  useEffect(() => {
-    // const totalPage = myItems.length / ITEM_PER_PAGE;
-    const totalPage = 100 / ITEM_PER_PAGE;
-    // INFO: check if totalPage is decimal -> totalPage % 1 !== 0 ?
-    // 'decimal' : 'not decimal'
-    if (totalPage % 1 !== 0) {
-      const newTotalPage = Math.floor(totalPage) + 1;
-      setTotalPage(newTotalPage);
-    } else {
-      setTotalPage(totalPage);
-    }
-  }, [myItems.length]);
-
   const handleApproveRequest = async (id) => {
     if (receiverInput === "") {
       window.alert("Fill the fields");
       return;
     }
-
     const itemId = parseInt(id);
     const requested = await getRequested(receiverInput, itemId);
     if (!requested) {
@@ -93,21 +79,6 @@ const CurrencyList = () => {
     window.alert(res);
   };
 
-  const onClickPageNumberBtnClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    setPreviousPage(pageNumber - 1);
-  };
-
-  const onClickPrevPageBtnClick = () => {
-    setCurrentPage((prev) => prev - 1);
-    setPreviousPage((prev) => prev - 1);
-  };
-
-  const onClickNextPageBtnClick = () => {
-    setCurrentPage((prev) => prev + 1);
-    setPreviousPage((prev) => prev + 1);
-  };
-
   return (
     <>
       <div className="overflow-x-auto currency-list">
@@ -122,41 +93,53 @@ const CurrencyList = () => {
             </tr>
           </thead>
           <tbody>
-            {myItems.map(
-              (item, index) =>
-                index < ITEM_PER_PAGE * currentPage &&
-                index >= ITEM_PER_PAGE * previousePage && (
-                  <tr key={index}>
-                    <th>{item.itemId}</th>
-                    {/*<-- start for example -->*/}
-                    <td>
-                      <img src={BtcIcon} alt="btc-icon" className="mr-1.5" />
-                      <span>BTC</span>
-                    </td>
-                    <td>
-                      <img src={EthIcon} alt="btc-icon" className="mr-1.5" />
-                      <span>ETH</span>
-                    </td>
-                    {/*<-- end for example -->*/}
-                    <td>{item.purpose}</td>
-                    <td>{toEther(item.amount)}</td>
-                    <td>{status[item.status]}</td>
-                    <td>
-                      <ButtonComp label={"Buy"} />
-                    </td>
-                  </tr>
-                )
+            {myItems.length ? (
+              myItems.map(
+                (item, index) =>
+                  index < ITEM_PER_PAGE * currentPage &&
+                  index >= ITEM_PER_PAGE * previousPage && (
+                    <tr key={index}>
+                      <th>{item.itemId}</th>
+                      {/*<-- start for example -->*/}
+                      <td>
+                        <img src={BtcIcon} alt="btc-icon" className="mr-1.5" />
+                        <span>BTC</span>
+                      </td>
+                      <td>
+                        <img src={EthIcon} alt="btc-icon" className="mr-1.5" />
+                        <span>ETH</span>
+                      </td>
+                      {/*<-- end for example -->*/}
+                      <td>{item.purpose}</td>
+                      <td>{toEther(item.amount)}</td>
+                      <td>{status[item.status]}</td>
+                      <td>
+                        <ButtonComp label={"Buy"} />
+                      </td>
+                    </tr>
+                  )
+              )
+            ) : (
+              <tr>
+                <td colSpan={currencyListTableHead.length}>
+                  <p className="text-white text-center">No data</p>
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
       </div>
-      <Pagination
-        totalPage={totalPage}
-        currentPage={currentPage}
-        onClickPageNumberBtnClick={onClickPageNumberBtnClick}
-        onClickNextPageBtnClick={onClickNextPageBtnClick}
-        onClickPrevPageBtnClick={onClickPrevPageBtnClick}
-      />
+      {myItems.length && (
+        <Pagination
+          totalPage={totalPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          setPreviousPage={setPreviousPage}
+          setTotalPage={setTotalPage}
+          data={myItems}
+          itemPerPage={ITEM_PER_PAGE}
+        />
+      )}
     </>
   );
 };
