@@ -44,6 +44,8 @@ module.exports = {
         "hover-color": "#571ce0",
         "hover-alt-color": "#291b6b",
         "fixed-color": "#2d0572",
+        "input-bg": "#432f9f",
+        "input-border": "#8790ae",
       },
     },
     spacing: {
@@ -172,6 +174,7 @@ module.exports = {
       "3xl": "1.5rem",
       full: "9999px",
       "30px": "30px",
+      "10px": "10px",
     },
     borderWidth: {
       DEFAULT: "1px",

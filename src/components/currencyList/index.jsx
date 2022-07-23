@@ -76,7 +76,6 @@ const CurrencyList = () => {
     );
     window.alert(res);
   };
-
   const handleConfirmDelivery = async (flag, itemId) => {
     const res = await confirmDelivery(
       library.provider,
@@ -90,6 +89,9 @@ const CurrencyList = () => {
   return (
     <>
       <div className="overflow-x-auto currency-list">
+        <p className="text-left 2xl:text-right text-white mb-3.5 text-lg">
+          Total items: {myItems.length}
+        </p>
         <table className="w-350% sm:w-255% md:w-210% lg:w-155% xl:w-120% 2xl:w-full align-top border-collapse currency-list__table">
           <thead className="align-bottom">
             <tr>

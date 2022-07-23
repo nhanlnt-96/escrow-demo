@@ -2,7 +2,6 @@ import React, { createContext, useEffect, useState } from "react";
 import { useEthers } from "@usedapp/core";
 import { getEscAcc } from "utils/escrow";
 import SectionBanner from "components/sectionBanner";
-import HomepageImage from "assets/images/section-header.png";
 import EscrowInfo from "components/EscrowInfo";
 import Ownerpannel from "components/Ownerpannel";
 import UseEscrow from "components/UseEscrow";
@@ -26,20 +25,28 @@ const Homepage = () => {
     func();
   }, []);
 
+  useEffect(() => {
+    const isShowedChooseCurrencyModal = window.sessionStorage.getItem(
+      "isShowedChooseCurrencyModal"
+    );
+    if (Boolean(isShowedChooseCurrencyModal)) {
+      setIsShowCurrencyModal(false);
+    } else {
+      window.sessionStorage.setItem("isShowedChooseCurrencyModal", "true");
+    }
+  }, []);
+
   const onSwapCurrencyBtnClick = () => {
     let flag = JSON.stringify(fromCryptoValue);
     setFromCryptoValue(toCryptoValue);
     setToCryptoValue(JSON.parse(flag));
   };
 
-  const onChooseCurrencyBtnClick = (e, isModal = true) => {
+  const onChooseCurrencyBtnClick = (e) => {
     e.preventDefault();
     console.log(
       `from: ${fromCryptoValue.symbol} - to: ${toCryptoValue.symbol}`
     );
-    if (isModal) {
-      onCloseModalBtnClick();
-    }
   };
 
   const onCloseModalBtnClick = () => {
@@ -59,7 +66,7 @@ const Homepage = () => {
       }}
     >
       <div className="homepage pb-6">
-        <SectionBanner image={HomepageImage} title={"Currency List"} />
+        <SectionBanner title={"Currency List"} />
         <div className="container px-3 xl:px-0 mx-auto">
           <ChooseCurrencyHeader />
           <CurrencyList />

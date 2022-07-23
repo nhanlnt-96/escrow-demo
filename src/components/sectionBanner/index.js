@@ -5,13 +5,14 @@ import { useLocation } from "react-router-dom";
 import { routes } from "configs";
 import ArrowRightIcon from "assets/icons/arrow-right.png";
 import { useWindowSize } from "utils";
+import SectionBannerImageDefault from "assets/images/section-header.png";
 
 const SectionBanner = ({ title, image }) => {
   const { pathname } = useLocation();
   const currentWidth = useWindowSize();
   return (
     <Parallax
-      bgImage={currentWidth >= 768 ? image : ""}
+      bgImage={currentWidth >= 768 ? image || SectionBannerImageDefault : ""}
       className="w-full h-40 md:h-80 xl:h-480px section-banner__parallax"
     >
       <div className="w-full h-full container mx-auto flex flex-col justify-center items-center md:items-start text-white px-3 xl:px-0">
