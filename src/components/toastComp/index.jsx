@@ -19,7 +19,7 @@ const ToastNotification = ({
   return (
     <>
       {showToast && (
-        <div className="flex items-center p-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow absolute right-2 bottom-2 fixed">
+        <div className="flex items-center p-4 w-full max-w-xs text-gray-500 bg-white rounded-lg shadow right-2 bottom-2 fixed">
           {toastFor === "success" ? (
             <div className="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-green-DEFAULT-500 bg-green-DEFAULT-200 rounded-lg">
               <svg
