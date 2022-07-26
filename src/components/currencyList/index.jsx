@@ -30,7 +30,6 @@ const CurrencyList = () => {
   const [receiverInput, setReceiverInput] = useState("");
   const { library, account } = useEthers();
   const [myItemsAfterFilter, setMyItemsAfterFilter] = useState([]);
-  const [isGetMyItemsLoading, setIsGetMyItemsLoading] = useState(false);
   const [isFilterBy, setIsFilterBy] = useState("");
   console.log(getItemsData);
   useEffect(() => {
@@ -138,7 +137,7 @@ const CurrencyList = () => {
               </tr>
             </thead>
             <tbody>
-              {isGetMyItemsLoading ? (
+              {getItemsData.isLoading ? (
                 <tr>
                   <td colSpan={currencyListTableHead.length}>
                     <div
