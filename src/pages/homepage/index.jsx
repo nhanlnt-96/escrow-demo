@@ -47,6 +47,7 @@ const Homepage = () => {
     console.log(
       `from: ${fromCryptoValue.symbol} - to: ${toCryptoValue.symbol}`
     );
+    onCloseModalBtnClick();
   };
 
   const onCloseModalBtnClick = () => {
