@@ -22,6 +22,9 @@
       ],
       "configs": [
         "./configs"
+      ],
+      "store": [
+        "./store"
       ]
     }
   },

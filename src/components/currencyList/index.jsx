@@ -1,18 +1,14 @@
 import "./CurrencyList.scss";
 import React, { useEffect, useState } from "react";
 import { useEthers } from "@usedapp/core";
-import {
-  approveRequest,
-  confirmDelivery,
-  getItems,
-  getRequested,
-  toEther,
-} from "utils";
+import { approveRequest, confirmDelivery, getRequested, toEther } from "utils";
 import { currencyListTableHead } from "configs";
 import BtcIcon from "assets/images/btc.svg";
 import EthIcon from "assets/images/eth.svg";
 import ButtonComp from "../buttonComp";
 import { Pagination } from "../pagination";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchItems } from "store/getItems/getItemsSlice";
 
 const status = [
   "OPEN",
@@ -25,49 +21,35 @@ const status = [
 ];
 
 const CurrencyList = () => {
+  const dispatch = useDispatch();
+  const getItemsData = useSelector((state) => state.itemsList);
   const ITEM_PER_PAGE = 10;
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [previousPage, setPreviousPage] = useState(0);
   const [receiverInput, setReceiverInput] = useState("");
   const { library, account } = useEthers();
-  const [myItems, setMyItems] = useState([]);
   const [myItemsAfterFilter, setMyItemsAfterFilter] = useState([]);
   const [isGetMyItemsLoading, setIsGetMyItemsLoading] = useState(false);
   const [isFilterBy, setIsFilterBy] = useState("");
-
+  console.log(getItemsData);
   useEffect(() => {
     if (!account) {
-      setMyItems([]);
+      setMyItemsAfterFilter([]);
     } else {
-      (async () => {
-        setIsGetMyItemsLoading(true);
-        const res = await getItems(account);
-        let items = [];
-        if (res.length) {
-          res.forEach((item) => {
-            if (item.owner === account) {
-              items.push(item);
-            }
-          });
-          setMyItems(items);
-          setIsGetMyItemsLoading(false);
-        } else {
-          setIsGetMyItemsLoading(false);
-        }
-      })();
+      dispatch(fetchItems({ account }));
     }
   }, [account]);
 
   useEffect(() => {
     if (isFilterBy) {
       setMyItemsAfterFilter(
-        myItems.filter((val) => status[val.status] === isFilterBy)
+        getItemsData.items.filter((val) => status[val.status] === isFilterBy)
       );
     } else {
-      setMyItemsAfterFilter(myItems);
+      setMyItemsAfterFilter(getItemsData.items);
     }
-  }, [myItems, isFilterBy]);
+  }, [getItemsData.items, isFilterBy]);
 
   const handleApproveRequest = async (id) => {
     if (receiverInput === "") {
@@ -105,6 +87,7 @@ const CurrencyList = () => {
       setIsFilterBy("");
     }
   };
+
   return (
     <>
       <div className="currency-list">

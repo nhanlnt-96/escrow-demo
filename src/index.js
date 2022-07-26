@@ -5,13 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { DAppProvider } from "@usedapp/core";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "store/store";
 
 ReactDOM.render(
   <DAppProvider config={{}}>
     <React.StrictMode>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </React.StrictMode>
   </DAppProvider>,
   document.getElementById("root")
