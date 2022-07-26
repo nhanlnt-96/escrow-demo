@@ -19,7 +19,7 @@ const ButtonComp = ({
         disabled={isDisabled}
         type="submit"
         onClick={(e) => btnAction(e)}
-        className={`py-2.5 px-8 text-center bg-violet-hover-color transition-all border-violet-hover-color border rounded-3xl w-full font-bold text-lg text-white ${
+        className={`py-2.5 px-8 text-center bg-violet-hover-color transition-all border-violet-hover-color border rounded-3xl w-full font-bold text-lg text-white capitalize ${
           !isDisabled ? "hover:bg-violet-hover-alt-color" : "cursor-not-allowed"
         }`}
       >
