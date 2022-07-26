@@ -1,9 +1,18 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { routes } from "configs";
 import HeaderComp from "components/headerComp";
+import { useEthers } from "@usedapp/core";
 
 const MainLayout = () => {
+  const { account, chainId } = useEthers();
+
+  const renderComponentHandler = (isPrivate, module) => {
+    if (isPrivate) {
+      return account && chainId === 80001 ? module : <Navigate to="/" />;
+    }
+    return module;
+  };
   return (
     <div className="min-h-screen w-screen bg-violet overflow-hidden">
       <HeaderComp />
@@ -13,7 +22,7 @@ const MainLayout = () => {
             <Route
               key={index}
               path={val.path}
-              element={val.module}
+              element={renderComponentHandler(val.isPrivate, val.module)}
               exact={val.isExact}
             />
           ))}

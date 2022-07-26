@@ -69,19 +69,23 @@ const HeaderComp = () => {
             }`}
           >
             <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
-              {routes.map((val, index) => (
-                <li key={index}>
-                  <Link
-                    to={val.path}
-                    className={`block py-2 pr-4 pl-3 text-lg rounded md:bg-transparent md:p-0 hover:text-pink-head-alt ${
-                      pathname === val.path &&
-                      "bg-blue-700 text-white md:text-pink-head-alt"
-                    }`}
-                  >
-                    {val.label}
-                  </Link>
-                </li>
-              ))}
+              {routes.map(
+                (val, index) =>
+                  ((val.isPrivate && account && chainId === 80001) ||
+                    !val.isPrivate) && (
+                    <li key={index}>
+                      <Link
+                        to={val.path}
+                        className={`block py-2 pr-4 pl-3 text-lg rounded md:bg-transparent md:p-0 hover:text-pink-head-alt ${
+                          pathname === val.path &&
+                          "bg-blue-700 text-white md:text-pink-head-alt"
+                        }`}
+                      >
+                        {val.label}
+                      </Link>
+                    </li>
+                  )
+              )}
             </ul>
           </div>
         </div>
