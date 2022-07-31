@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import ArrowLeft from "assets/icons/pagination-arrow-left.png";
 import ArrowRight from "assets/icons/pagination-arrow-right.png";
 
@@ -12,10 +12,8 @@ export const Pagination = ({
   itemPerPage,
 }) => {
   const ITEM_PER_PAGE = itemPerPage;
-  const MAX_BTN = 10;
 
   useEffect(() => {
-    // const totalPage = data.length / ITEM_PER_PAGE;
     const totalPage = data.length / ITEM_PER_PAGE;
     // INFO: check if totalPage is decimal -> totalPage % 1 !== 0 ?
     // 'decimal' : 'not decimal'
@@ -41,6 +39,7 @@ export const Pagination = ({
     setCurrentPage((prev) => prev + 1);
     setPreviousPage((prev) => prev + 1);
   };
+
   return (
     <div className="w-full flex justify-center items-center mt-3.5">
       <div className="inline-flex justify-center items-center">
@@ -55,7 +54,7 @@ export const Pagination = ({
         >
           <img src={ArrowLeft} alt="pagination-arrow-icon" />
         </button>
-        {totalPage <= MAX_BTN && (
+        {
           <div className="hidden md:flex">
             {[...new Array(totalPage)].map((_, index) => (
               <button
@@ -71,7 +70,7 @@ export const Pagination = ({
               </button>
             ))}
           </div>
-        )}
+        }
         <button
           disabled={currentPage >= totalPage}
           className={`flex justify-center items-center bg-violet-hover-alt-color rounded-lg w-14 h-10 transition-all ml-5 ${

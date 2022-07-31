@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import getItemsListReducer from "./getItems/getItemsSlice";
+import escrowItems from "./account/reducer";
 
 export default configureStore({
   reducer: {
-    itemsList: getItemsListReducer,
+    escrowItems: escrowItems,
   },
 });

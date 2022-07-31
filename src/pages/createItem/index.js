@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import SectionBanner from "components/sectionBanner";
 import ButtonComp from "components/buttonComp";
 import { useEthers } from "@usedapp/core";
@@ -15,40 +15,37 @@ const CreateItem = () => {
 
   const { account, library } = useEthers();
 
-  const handleCreateItem = async () => {
+  const handleCreateItem = async (e) => {
     setIsLoading(true);
+    e.preventDefault();
     const value = parseFloat(valueInput);
     if (purposeInput === "" || value === 0 || isNaN(value)) {
       setIsLoading(false);
       setNotiMsg("Fill the fields");
       return;
-    } else {
-      setNotiMsg("");
     }
     if (value < 0.001) {
       setNotiMsg("Value should be more than 0.001");
       setIsLoading(false);
       return;
-    } else {
-      setNotiMsg("");
     }
-
     const res = await createItem(
       library.provider,
       account,
       purposeInput,
       value
     );
-    if (res) {
+    if (JSON.stringify(res).toLowerCase() === '"success"') {
       setNotiMsg(res);
       setIsLoading(false);
       setPurposeInput("");
       setValueInput("");
-      setInterval(() => {
-        navigate("/");
-      }, 3000);
+      // setInterval(() => {
+      //   navigate("/");
+      // }, 3000);
       clearInterval();
     } else {
+      setNotiMsg("Failed");
       setIsLoading(false);
     }
   };
@@ -96,7 +93,11 @@ const CreateItem = () => {
           </form>
         </div>
       </div>
-      <ToastNotification errorMsg={notiMsg} toastFor={notiMsg.toLowerCase()} />
+      <ToastNotification
+        errorMsg={notiMsg}
+        toastFor={notiMsg.toLowerCase()}
+        setErrorMsg={setNotiMsg}
+      />
     </div>
   );
 };

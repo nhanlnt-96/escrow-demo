@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { DAppProvider } from "@usedapp/core";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "store/store";
+import store from "store";
 
 ReactDOM.render(
   <DAppProvider config={{}}>

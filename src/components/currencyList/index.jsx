@@ -1,14 +1,16 @@
 import "./CurrencyList.scss";
-import React, { useEffect, useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useEthers } from "@usedapp/core";
 import { approveRequest, confirmDelivery, getRequested, toEther } from "utils";
 import { currencyListTableHead } from "configs";
 import BtcIcon from "assets/images/btc.svg";
 import EthIcon from "assets/images/eth.svg";
-import ButtonComp from "../buttonComp";
 import { Pagination } from "../pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchItems } from "store/getItems/getItemsSlice";
+import { CurrencyListHeader } from "./components";
+import ToastNotification from "components/toastComp";
+import { getEscrowItems, getEscrowItemsPending } from "store/account/selector";
+import { fetchEscrowItems } from "store/account/fetchEscrowItems";
 
 const status = [
   "OPEN",
@@ -21,44 +23,44 @@ const status = [
 ];
 
 const CurrencyList = () => {
-  const dispatch = useDispatch();
-  const getItemsData = useSelector((state) => state.itemsList);
   const ITEM_PER_PAGE = 10;
+  const dispatch = useDispatch();
+  const { library, account } = useEthers();
+  const escrowItemsPending = useSelector(getEscrowItemsPending);
+  const escrowItems = useSelector(getEscrowItems);
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [previousPage, setPreviousPage] = useState(0);
   const [receiverInput, setReceiverInput] = useState("");
-  const { library, account } = useEthers();
-  const [myItemsAfterFilter, setMyItemsAfterFilter] = useState([]);
-  const [isFilterBy, setIsFilterBy] = useState("");
-  console.log(getItemsData);
+  const [filterBy, setFilterBy] = useState("");
+  const [notiMsg, setNotiMsg] = useState("");
+  const [approvingAccount, setApprovingAccount] = useState(null);
+  const [confirmingAccount, setConfirmingAccount] = useState(null);
+  const [disputingAccount, setDisputingAccount] = useState(null);
+  const filteredEscrowItems = useMemo(
+    () =>
+      filterBy
+        ? escrowItems.filter((item) => status[item.status] === filterBy)
+        : escrowItems,
+    [escrowItems, filterBy]
+  );
+
   useEffect(() => {
-    if (!account) {
-      setMyItemsAfterFilter([]);
-    } else {
-      dispatch(fetchItems({ account }));
-    }
+    dispatch(fetchEscrowItems(account));
   }, [account]);
 
-  useEffect(() => {
-    if (isFilterBy) {
-      setMyItemsAfterFilter(
-        getItemsData.items.filter((val) => status[val.status] === isFilterBy)
-      );
-    } else {
-      setMyItemsAfterFilter(getItemsData.items);
-    }
-  }, [getItemsData.items, isFilterBy]);
-
-  const handleApproveRequest = async (id) => {
+  const handleApproveRequest = async (idOfItem) => {
+    setApprovingAccount(idOfItem);
     if (receiverInput === "") {
-      window.alert("Fill the fields");
+      setNotiMsg("Fill the fields");
+      setApprovingAccount(null);
       return;
     }
-    const itemId = parseInt(id);
+    const itemId = parseInt(idOfItem);
     const requested = await getRequested(receiverInput, itemId);
     if (!requested) {
-      window.alert("Item not requested.");
+      setNotiMsg("Item not requested.");
+      setApprovingAccount(null);
       return;
     }
     const res = await approveRequest(
@@ -67,77 +69,64 @@ const CurrencyList = () => {
       itemId,
       receiverInput
     );
-    window.alert(res);
+    if (JSON.stringify(res).toLowerCase() === '"success"') {
+      setNotiMsg(res);
+      setReceiverInput("");
+      dispatch(fetchEscrowItems(account));
+    } else {
+      setNotiMsg("Failed. Try again.");
+      setReceiverInput("");
+    }
+    setApprovingAccount(null);
   };
   const handleConfirmDelivery = async (flag, itemId) => {
+    if (flag) {
+      setConfirmingAccount(itemId);
+    } else {
+      setDisputingAccount(itemId);
+    }
     const res = await confirmDelivery(
       library.provider,
       account,
       parseInt(itemId),
       flag
     );
-    window.alert(res);
-  };
-
-  const onFilterListBtnClick = (filterBy) => {
-    if (filterBy !== "all") {
-      setIsFilterBy(filterBy);
+    if (JSON.stringify(res).toLowerCase() === '"success"') {
+      setNotiMsg(res);
+      setReceiverInput("");
+      dispatch(fetchEscrowItems(account));
     } else {
-      setIsFilterBy("");
+      setNotiMsg("Failed. Try again.");
     }
+    setConfirmingAccount(null);
+    setDisputingAccount(null);
   };
 
   return (
     <>
       <div className="currency-list">
-        <div className="flex justify-between items-center flex-col xl:flex-row my-3.5 md:my-0 md:mb-3.5">
-          <div className="flex items-center flex-wrap gap-1.5">
-            <div className="mr-1.5 last:mr-0">
-              <button
-                className={`py-2.5 px-5 text-center transition-all border-violet-hover-color border rounded-3xl w-full font-bold text-lg text-white capitalize hover:bg-violet-hover-color ${
-                  !isFilterBy
-                    ? "bg-violet-hover-color"
-                    : "bg-violet-hover-alt-color"
-                }`}
-                onClick={() => onFilterListBtnClick("all")}
-              >
-                All
-              </button>
-            </div>
-            {status.map((val, index) => (
-              <div key={index} className="mr-1.5 last:mr-0">
-                <button
-                  className={`py-2.5 px-5 text-center transition-all border-violet-hover-color border rounded-3xl w-full font-bold text-lg text-white capitalize hover:bg-violet-hover-color ${
-                    isFilterBy === val
-                      ? "bg-violet-hover-color"
-                      : "bg-violet-hover-alt-color"
-                  }`}
-                  onClick={() => onFilterListBtnClick(val)}
-                >
-                  {val.toLowerCase()}
-                </button>
-              </div>
-            ))}
-          </div>
-          <div className="flex items-center justify-end w-full xl:w-max xl:justify-center mt-3.5 xl:mt-0">
-            <p className="text-white text-lg">
-              Total items: {myItemsAfterFilter.length}
-            </p>
-          </div>
-        </div>
+        <CurrencyListHeader
+          status={status}
+          isFilterBy={filterBy}
+          setIsFilterBy={setFilterBy}
+          totalItem={filteredEscrowItems.length}
+        />
         <div className="overflow-x-auto">
           <table className="w-350% sm:w-255% md:w-210% lg:w-155% xl:w-120% 2xl:w-full align-top border-collapse currency-list__table">
             <thead className="align-bottom">
               <tr>
                 {currencyListTableHead.map((val, index) => (
-                  <th key={index}>
+                  <th
+                    key={index}
+                    className={val.toLowerCase() === "purpose" ? "w-300px" : ""}
+                  >
                     <p>{val}</p>
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {getItemsData.isLoading ? (
+              {escrowItemsPending ? (
                 <tr>
                   <td colSpan={currencyListTableHead.length}>
                     <div
@@ -164,12 +153,15 @@ const CurrencyList = () => {
                     </div>
                   </td>
                 </tr>
-              ) : myItemsAfterFilter.length ? (
-                myItemsAfterFilter.map(
+              ) : filteredEscrowItems.length ? (
+                filteredEscrowItems.map(
                   (item, index) =>
                     index < ITEM_PER_PAGE * currentPage &&
                     index >= ITEM_PER_PAGE * previousPage && (
-                      <tr key={index}>
+                      <tr
+                        key={index}
+                        className="hover:bg-violet-light cursor-pointer transition-all"
+                      >
                         <th>{item.itemId}</th>
                         {/*<-- start for example -->*/}
                         <td>
@@ -189,12 +181,81 @@ const CurrencyList = () => {
                           <span>ETH</span>
                         </td>
                         {/*<-- end for example -->*/}
-                        <td>{item.purpose}</td>
+                        <td>
+                          <p
+                            title={item.purpose}
+                            className="inline-block whitespace-nowrap overflow-hidden overflow-ellipsis w-300px"
+                          >
+                            {item.purpose}
+                          </p>
+                        </td>
                         <td>{toEther(item.amount)}</td>
                         <td>{status[item.status]}</td>
-                        <td>
+                        <td className="w-450px">
                           {item.status === "0" ? (
-                            <ButtonComp label={"Buy"} />
+                            <div className="flex justify-center items-center w-full">
+                              <input
+                                onChange={(e) =>
+                                  setReceiverInput(e.target.value)
+                                }
+                                type="text"
+                                id="value"
+                                placeholder="Provider address"
+                                className="border outline-none py-2.5 px-5 bg-violet-input-bg rounded-10px border-violet-input-border w-full text-white mr-2"
+                              />
+                              <button
+                                disabled={
+                                  !receiverInput ||
+                                  approvingAccount === item.itemId
+                                }
+                                className={`py-2.5 px-4 text-center transition-all border-violet-hover-color border rounded-3xl font-bold text-lg text-white capitalize bg-violet-hover-color w-3/12 ${
+                                  !receiverInput ||
+                                  approvingAccount === item.itemId
+                                    ? "cursor-not-allowed"
+                                    : "hover:bg-violet-hover-alt-color"
+                                }`}
+                                onClick={() =>
+                                  handleApproveRequest(item.itemId)
+                                }
+                              >
+                                {approvingAccount === item.itemId
+                                  ? "Loading"
+                                  : "Approve"}
+                              </button>
+                            </div>
+                          ) : item.status === "2" && item.provided ? (
+                            <div className="flex justify-center items-center">
+                              <button
+                                disabled={confirmingAccount === item.itemId}
+                                className={`py-2.5 px-5 text-center transition-all border-violet-hover-color border rounded-3xl w-full font-bold text-lg text-white capitalize bg-violet-hover-color w-full mr-2 ${
+                                  confirmingAccount === item.itemId
+                                    ? "cursor-not-allowed"
+                                    : "hover:bg-violet-hover-alt-color"
+                                }`}
+                                onClick={() =>
+                                  handleConfirmDelivery(true, item.itemId)
+                                }
+                              >
+                                {confirmingAccount === item.itemId
+                                  ? "Loading"
+                                  : "Confirm"}
+                              </button>
+                              <button
+                                disabled={disputingAccount === item.itemId}
+                                className={`py-2.5 px-5 text-center transition-all border-violet-hover-color border rounded-3xl w-full font-bold text-lg text-white capitalize bg-violet-hover-alt-color w-full ${
+                                  disputingAccount === item.itemId
+                                    ? "cursor-not-allowed"
+                                    : "hover:bg-violet-hover-color"
+                                }`}
+                                onClick={() =>
+                                  handleConfirmDelivery(false, item.itemId)
+                                }
+                              >
+                                {disputingAccount === item.itemId
+                                  ? "Loading"
+                                  : "Dispute"}
+                              </button>
+                            </div>
                           ) : (
                             ""
                           )}
@@ -213,19 +274,24 @@ const CurrencyList = () => {
           </table>
         </div>
       </div>
-      {myItemsAfterFilter.length ? (
+      {filteredEscrowItems.length ? (
         <Pagination
           totalPage={totalPage}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           setPreviousPage={setPreviousPage}
           setTotalPage={setTotalPage}
-          data={myItemsAfterFilter}
+          data={filteredEscrowItems}
           itemPerPage={ITEM_PER_PAGE}
         />
       ) : (
         ""
       )}
+      <ToastNotification
+        errorMsg={notiMsg}
+        toastFor={notiMsg.toLowerCase()}
+        setErrorMsg={setNotiMsg}
+      />
     </>
   );
 };

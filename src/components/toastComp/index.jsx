@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const ToastNotification = ({
   errorMsg,
+  setErrorMsg,
   isNotHide = false,
   toastFor = "warning",
 }) => {
@@ -12,6 +13,7 @@ const ToastNotification = ({
       if (!isNotHide) {
         setTimeout(() => {
           setShowToast(false);
+          setErrorMsg("");
         }, 2000);
       }
     }

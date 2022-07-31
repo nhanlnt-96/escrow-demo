@@ -841,6 +841,8 @@ module.exports = {
       screen: "100vw",
       min: "min-content",
       max: "max-content",
+      "300px": "300px",
+      "450px": "450px",
     }),
     zIndex: {
       auto: "auto",
