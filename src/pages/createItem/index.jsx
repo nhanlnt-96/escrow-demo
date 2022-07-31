@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import SectionBanner from "components/sectionBanner";
-import ButtonComp from "components/buttonComp";
 import { useEthers } from "@usedapp/core";
 import { createItem } from "utils";
 import ToastNotification from "components/toastComp";
 import { useNavigate } from "react-router-dom";
+import SectionBanner from "components/sectionBanner";
+import ButtonComp from "components/buttonComp";
 
 const CreateItem = () => {
   const navigate = useNavigate();
@@ -37,17 +37,16 @@ const CreateItem = () => {
     );
     if (JSON.stringify(res).toLowerCase() === '"success"') {
       setNotiMsg(res);
-      setIsLoading(false);
       setPurposeInput("");
       setValueInput("");
-      // setInterval(() => {
-      //   navigate("/");
-      // }, 3000);
+      setInterval(() => {
+        navigate("/");
+      }, 3000);
       clearInterval();
     } else {
-      setNotiMsg("Failed");
-      setIsLoading(false);
+      setNotiMsg("Failed. Try again.");
     }
+    setIsLoading(false);
   };
 
   return (

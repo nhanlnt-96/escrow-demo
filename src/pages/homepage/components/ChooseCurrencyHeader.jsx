@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { cryptoCurrencyList } from "configs";
-import ButtonComp from "../../../components/buttonComp";
 import { DropdownComp } from "./DropdownComp";
 import { HomepageContext } from "pages/homepage";
 import { useWindowSize } from "utils";
+import ButtonComp from "components/buttonComp";
 
 const arrowUpDown = (
   <svg

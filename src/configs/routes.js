@@ -1,7 +1,8 @@
+import Homepage from "pages/homepage";
 import CreateItem from "pages/createItem";
 import RequestItem from "pages/requestItem";
+import PerformDelivery from "pages/performDelivery";
 import PageNotFound from "pages/pageNotFound";
-import Homepage from "pages/homepage";
 
 export const routes = [
   {
@@ -23,6 +24,13 @@ export const routes = [
     isExact: true,
     path: "/request-item",
     module: <RequestItem />,
+    isPrivate: true,
+  },
+  {
+    label: "Perform Delivery",
+    isExact: true,
+    path: "/perform-delivery",
+    module: <PerformDelivery />,
     isPrivate: true,
   },
   {

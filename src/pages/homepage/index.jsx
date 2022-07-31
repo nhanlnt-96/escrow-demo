@@ -1,13 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useEthers } from "@usedapp/core";
 import { getEscAcc } from "utils/escrow";
-import SectionBanner from "components/sectionBanner";
-import EscrowInfo from "components/EscrowInfo";
-import Ownerpannel from "components/Ownerpannel";
-import UseEscrow from "components/UseEscrow";
-import MyData from "components/MyData";
 import { ChooseCurrencyHeader, ChooseCurrencyPopup } from "./components";
-import CurrencyList from "../../components/currencyList";
+import SectionBanner from "components/sectionBanner";
+import CurrencyList from "components/currencyList";
 
 export const HomepageContext = createContext(null);
 
