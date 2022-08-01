@@ -1,11 +1,13 @@
 import React, { createContext, useEffect, useState } from "react";
-import { ChooseCurrencyHeader, ChooseCurrencyPopup } from "./components";
-import SectionBanner from "components/sectionBanner";
 import CurrencyList from "components/currencyList";
+import CreateItem from "pages/createItem";
+import { useEthers } from "@usedapp/core";
+import SectionBanner from "components/sectionBanner";
 
 export const HomepageContext = createContext(null);
 
 const Homepage = () => {
+  const { account, chainId, library } = useEthers();
   const [isShowChooseCurrencyModal, setIsShowCurrencyModal] = useState(true);
   const [fromCryptoValue, setFromCryptoValue] = useState(null);
   const [toCryptoValue, setToCryptoValue] = useState(null);
@@ -52,13 +54,25 @@ const Homepage = () => {
       }}
     >
       <div className="homepage pb-6">
-        <SectionBanner title={"Currency List"} />
+        {/*<SectionBanner title={"Currency List"} />*/}
+        {account && chainId === 80001 ? (
+          <CreateItem />
+        ) : (
+          <SectionBanner title={"Currency List"} />
+        )}
         <div className="container px-3 xl:px-0 mx-auto">
-          <ChooseCurrencyHeader />
+          {/*<ChooseCurrencyHeader />*/}
+          {account && chainId === 80001 && (
+            <div className="my-2.5 flex justify-center items-center">
+              <h6 className="font-bold text-white text-2xl md:text-5xl xl:text-6xl">
+                Currency List
+              </h6>
+            </div>
+          )}
           <CurrencyList />
         </div>
       </div>
-      {isShowChooseCurrencyModal && <ChooseCurrencyPopup />}
+      {/*{isShowChooseCurrencyModal && <ChooseCurrencyPopup />}*/}
     </HomepageContext.Provider>
   );
 };

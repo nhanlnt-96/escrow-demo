@@ -16,14 +16,14 @@ export const routes = [
     isPrivate: false,
     children: [],
   },
-  {
-    label: "Create Item",
-    isExact: true,
-    path: "/create-item",
-    module: <CreateItem />,
-    isPrivate: true,
-    children: [],
-  },
+  // {
+  //   label: "Create Item",
+  //   isExact: true,
+  //   path: "/create-item",
+  //   module: <CreateItem />,
+  //   isPrivate: true,
+  //   children: [],
+  // },
   {
     label: "Request Item",
     isExact: true,
