@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getItems } from "utils";
 
 export const fetchEscrowItems = createAsyncThunk(
-  "account/fetch-accounts",
+  "escrowItems/fetch-escrow-items",
   async (account) => {
     const response = await getItems(account);
 

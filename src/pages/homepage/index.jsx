@@ -1,6 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-import { useEthers } from "@usedapp/core";
-import { getEscAcc } from "utils/escrow";
 import { ChooseCurrencyHeader, ChooseCurrencyPopup } from "./components";
 import SectionBanner from "components/sectionBanner";
 import CurrencyList from "components/currencyList";
@@ -8,18 +6,9 @@ import CurrencyList from "components/currencyList";
 export const HomepageContext = createContext(null);
 
 const Homepage = () => {
-  const { account } = useEthers();
-  const [escAcc, setEscAcc] = useState("");
   const [isShowChooseCurrencyModal, setIsShowCurrencyModal] = useState(true);
   const [fromCryptoValue, setFromCryptoValue] = useState(null);
   const [toCryptoValue, setToCryptoValue] = useState(null);
-
-  useEffect(() => {
-    const func = async () => {
-      setEscAcc(await getEscAcc());
-    };
-    func();
-  }, []);
 
   useEffect(() => {
     const isShowedChooseCurrencyModal = window.sessionStorage.getItem(
@@ -69,21 +58,6 @@ const Homepage = () => {
           <CurrencyList />
         </div>
       </div>
-      {/*<EscrowInfo />*/}
-      {/*<div className="line"></div>*/}
-
-      {/*{escAcc === account ? (*/}
-      {/*  <div>*/}
-      {/*    <Ownerpannel />*/}
-      {/*    <div className="line"></div>*/}
-      {/*  </div>*/}
-      {/*) : (*/}
-      {/*  ""*/}
-      {/*)}*/}
-
-      {/*<UseEscrow />*/}
-      {/*<div className="line"></div>*/}
-
       {isShowChooseCurrencyModal && <ChooseCurrencyPopup />}
     </HomepageContext.Provider>
   );

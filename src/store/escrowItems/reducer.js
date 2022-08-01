@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchEscrowItems } from "./fetchEscrowItems";
 
-export const escrowItems = createSlice({
+export const escrowItemsReducer = createSlice({
   name: "escrowItems",
   initialState: {
     escrowItems: [],
@@ -25,4 +25,4 @@ export const escrowItems = createSlice({
   },
 });
 
-export default escrowItems.reducer;
+export default escrowItemsReducer.reducer;

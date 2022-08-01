@@ -9,8 +9,8 @@ import { Pagination } from "../pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { CurrencyListHeader } from "./components";
 import ToastNotification from "components/toastComp";
-import { getEscrowItems, getEscrowItemsPending } from "store/account/selector";
-import { fetchEscrowItems } from "store/account/fetchEscrowItems";
+import { getEscrowItems, getEscrowItemsPending } from "store/escrowItems/selector";
+import { fetchEscrowItems } from "store/escrowItems/fetchEscrowItems";
 
 const status = [
   "OPEN",

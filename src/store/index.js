@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import escrowItems from "./account/reducer";
+import escrowItemsReducer from "./escrowItems/reducer";
+import escrowAccountReducer from "./escrowAccount/reducer";
 
 export default configureStore({
   reducer: {
-    escrowItems: escrowItems,
+    escrowItems: escrowItemsReducer,
+    escrowAccount: escrowAccountReducer,
   },
 });

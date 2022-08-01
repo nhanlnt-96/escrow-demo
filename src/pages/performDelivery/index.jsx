@@ -4,10 +4,8 @@ import ButtonComp from "components/buttonComp";
 import ToastNotification from "components/toastComp";
 import { getItem, performDelivery } from "utils";
 import { useEthers } from "@usedapp/core";
-import { useNavigate } from "react-router-dom";
 
 const PerformDelivery = () => {
-  const navigate = useNavigate();
   const { account, library } = useEthers();
   const [itemIdInput, setItemIdInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
