@@ -1,7 +1,7 @@
 export const currencyListTableHead = [
   "ID",
-  "From",
-  "To",
+  // "From",
+  // "To",
   "Purpose",
   "Amount",
   "Status",

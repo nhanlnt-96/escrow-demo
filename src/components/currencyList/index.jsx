@@ -1,15 +1,16 @@
 import "./CurrencyList.scss";
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useEthers } from "@usedapp/core";
 import { approveRequest, confirmDelivery, getRequested, toEther } from "utils";
 import { currencyListTableHead } from "configs";
-import BtcIcon from "assets/images/btc.svg";
-import EthIcon from "assets/images/eth.svg";
 import { Pagination } from "../pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { CurrencyListHeader } from "./components";
 import ToastNotification from "components/toastComp";
-import { getEscrowItems, getEscrowItemsPending } from "store/escrowItems/selector";
+import {
+  getEscrowItems,
+  getEscrowItemsPending,
+} from "store/escrowItems/selector";
 import { fetchEscrowItems } from "store/escrowItems/fetchEscrowItems";
 
 const status = [
@@ -164,22 +165,22 @@ const CurrencyList = () => {
                       >
                         <th>{item.itemId}</th>
                         {/*<-- start for example -->*/}
-                        <td>
-                          <img
-                            src={BtcIcon}
-                            alt="btc-icon"
-                            className="mr-1.5"
-                          />
-                          <span>BTC</span>
-                        </td>
-                        <td>
-                          <img
-                            src={EthIcon}
-                            alt="btc-icon"
-                            className="mr-1.5"
-                          />
-                          <span>ETH</span>
-                        </td>
+                        {/*<td>*/}
+                        {/*  <img*/}
+                        {/*    src={BtcIcon}*/}
+                        {/*    alt="btc-icon"*/}
+                        {/*    className="mr-1.5"*/}
+                        {/*  />*/}
+                        {/*  <span>BTC</span>*/}
+                        {/*</td>*/}
+                        {/*<td>*/}
+                        {/*  <img*/}
+                        {/*    src={EthIcon}*/}
+                        {/*    alt="btc-icon"*/}
+                        {/*    className="mr-1.5"*/}
+                        {/*  />*/}
+                        {/*  <span>ETH</span>*/}
+                        {/*</td>*/}
                         {/*<-- end for example -->*/}
                         <td>
                           <p
