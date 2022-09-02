@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { ChooseCurrencyHeader, ChooseCurrencyPopup } from "./components";
 import SectionBanner from "components/sectionBanner";
 import CurrencyList from "components/currencyList";
+import CreateItem from "../createItem";
 
 export const HomepageContext = createContext(null);
 
@@ -52,13 +53,14 @@ const Homepage = () => {
       }}
     >
       <div className="homepage pb-6">
-        <SectionBanner title={"Currency List"} />
+        {/*<SectionBanner title={"Currency List"} />*/}
+        <CreateItem />
         <div className="container px-3 xl:px-0 mx-auto">
-          <ChooseCurrencyHeader />
+          {/*<ChooseCurrencyHeader />*/}
           <CurrencyList />
         </div>
       </div>
-      {isShowChooseCurrencyModal && <ChooseCurrencyPopup />}
+      {/*{isShowChooseCurrencyModal && <ChooseCurrencyPopup />}*/}
     </HomepageContext.Provider>
   );
 };
